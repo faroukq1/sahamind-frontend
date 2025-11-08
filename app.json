@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "sahaMind",
-    "slug": "sahaMind",
+    "name": "front-end-sahaMind",
+    "slug": "front-end-sahaMind",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "sahamind",
+    "scheme": "frontendsahamind",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -22,6 +22,7 @@
       "predictiveBackGestureEnabled": false
     },
     "web": {
+      "bundler": "metro",
       "output": "static",
       "favicon": "./assets/images/favicon.png"
     },
