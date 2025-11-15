@@ -1,4 +1,6 @@
+import { AuthFacade } from "@/api/services/authFacade";
 import { Ionicons } from "@expo/vector-icons";
+import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import {
@@ -22,12 +24,18 @@ export default function RegisterScreen() {
     password: "",
     confirmPassword: "",
   });
-
+  const registerMutation = useMutation({
+    mutationFn : () => AuthFacade.register(formData.email, formData.password, formData.confirmPassword, 'patient'),
+    onSuccess : (data) => {
+      console.log(data);
+      router.push('/home');
+    },
+    onError : (error) => {
+      console.log(error);
+    }
+  })
   const handleSubmit = () => {
-    // Handle signup logic here
-    console.log("Signup:", formData);
-    // After successful registration:
-    // router.replace('/home');
+    registerMutation.mutate()
   };
 
   return (

@@ -1,4 +1,6 @@
+import { AuthFacade } from "@/api/services/authFacade";
 import { Ionicons } from "@expo/vector-icons";
+import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
@@ -17,13 +19,20 @@ export default function LoginScreen() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const loginMutation = useMutation({
+    mutationFn : () => AuthFacade.login(formData.email, formData.password),
+    onSuccess : (data) => {
+      console.log(data);
+      router.push('/home');
+    },
+    onError : (error) => {
+      console.log(error);
+    }
+  })
 
   const handleSubmit = () => {
-    // Handle login logic here
-    console.log("Login:", formData);
-    // After successful login:
-    // router.replace('/home');
-  };
+    loginMutation.mutate()
+  }
 
   return (
     <KeyboardAvoidingView

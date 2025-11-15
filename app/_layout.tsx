@@ -1,9 +1,12 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 
+export const queryClient = new QueryClient();
+
 export default function RootLayout() {
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <StatusBar style="light" />
       <Stack
         screenOptions={{
@@ -12,12 +15,15 @@ export default function RootLayout() {
         }}
       >
         <Stack.Screen name="index" options={{ animation: "fade" }} />
-        <Stack.Screen name="login" options={{ animation: "fade" }} />
         <Stack.Screen
-          name="register"
+          name="(auth)/login/index"
+          options={{ animation: "fade" }}
+        />
+        <Stack.Screen
+          name="(auth)/register/index"
           options={{ animation: "slide_from_right" }}
         />
       </Stack>
-    </>
+    </QueryClientProvider>
   );
 }
