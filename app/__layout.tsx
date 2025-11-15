@@ -1,18 +1,23 @@
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import './global.css';
+import { Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+
 export default function RootLayout() {
   return (
-    <SafeAreaProvider>
+    <>
+      <StatusBar style="light" />
       <Stack
         screenOptions={{
           headerShown: false,
-          animation: 'slide_from_right', // optional animation
+          contentStyle: { backgroundColor: "#F3F4F6" },
         }}
-      />
-      <StatusBar style="auto" />
-    </SafeAreaProvider>
+      >
+        <Stack.Screen name="index" options={{ animation: "fade" }} />
+        <Stack.Screen name="login" options={{ animation: "fade" }} />
+        <Stack.Screen
+          name="register"
+          options={{ animation: "slide_from_right" }}
+        />
+      </Stack>
+    </>
   );
 }
