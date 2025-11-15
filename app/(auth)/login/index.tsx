@@ -1,9 +1,11 @@
 import { AuthFacade } from "@/api/services/authFacade";
+import { Button } from "@/components/ui/button";
 import { Ionicons } from "@expo/vector-icons";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
+  ActivityIndicator,
   Image,
   KeyboardAvoidingView,
   Platform,
@@ -11,8 +13,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity,
-  View,
+  View
 } from "react-native";
 
 export default function LoginScreen() {
@@ -100,7 +101,7 @@ export default function LoginScreen() {
                 }
                 secureTextEntry={!showPassword}
               />
-              <TouchableOpacity
+              <Button
                 onPress={() => setShowPassword(!showPassword)}
                 style={styles.eyeIcon}
               >
@@ -109,14 +110,22 @@ export default function LoginScreen() {
                   size={20}
                   color="#9CA3AF"
                 />
-              </TouchableOpacity>
+              </Button>
             </View>
           </View>
 
           {/* Sign In Button */}
-          <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-            <Text style={styles.buttonText}>Sign in</Text>
-          </TouchableOpacity>
+          <Button
+            style={[styles.button, loginMutation.isPending && styles.buttonDisabled]}
+            onPress={handleSubmit}
+            disabled={loginMutation.isPending}
+          >
+            {loginMutation.isPending ? (
+              <ActivityIndicator color="#ffffff" />
+            ) : (
+              <Text style={styles.buttonText}>Login</Text>
+            )}
+          </Button>
         </View>
 
         {/* Divider */}
@@ -128,23 +137,23 @@ export default function LoginScreen() {
 
         {/* Social Login */}
         <View style={styles.socialContainer}>
-          <TouchableOpacity style={styles.socialButton}>
+          <Button style={styles.socialButton}>
             <Ionicons name="logo-google" size={24} color="#4285F4" />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.socialButton}>
+          </Button>
+          <Button style={styles.socialButton}>
             <Ionicons name="logo-facebook" size={24} color="#1877F2" />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.socialButton}>
+          </Button>
+          <Button style={styles.socialButton}>
             <Ionicons name="logo-twitter" size={24} color="#1DA1F2" />
-          </TouchableOpacity>
+          </Button>
         </View>
 
         {/* Sign Up Link */}
         <View style={styles.footer}>
           <Text style={styles.footerText}>Don't have an account? </Text>
-          <TouchableOpacity onPress={() => router.push("/register")}>
+          <Button onPress={() => router.push("/register")}>
             <Text style={styles.footerLink}>Sign up</Text>
-          </TouchableOpacity>
+          </Button>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -237,6 +246,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 8,
+  },
+  buttonDisabled: {
+    opacity: 0.7,
   },
   buttonText: {
     color: "#fff",
